@@ -11,7 +11,7 @@ export default function SearchBar( { sendCardList } ) {
         let response = await fetch(`${BASE_URL}/cards/search?q=${searchInput}`);
         let data = await response.json();
         const fullCardList = data.data;
-
+        console.log(data)
         while (data.has_more && fullCardList.length < MAX_LIST_SIZE) {
             response = await fetch(data.next_page);
             data = await response.json();

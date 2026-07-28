@@ -4,7 +4,7 @@ export default function Card({ card }) {
     }
     return (
         <div className="card">
-            <img src={card.image_uris.small}/>
+            <img src={card.image_uris.png}/>
 
             <p>{card.name}</p>
         </div>

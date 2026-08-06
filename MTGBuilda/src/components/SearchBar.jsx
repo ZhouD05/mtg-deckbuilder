@@ -21,13 +21,13 @@ export default function SearchBar( { sendCardList } ) {
     }
 
     return (
-        <container>
+        <container className="searchBar">
             <input 
                 type="text" 
                 placeholder="Search for Cards..." 
                 onChange={(e) => setSearchInput(e.target.value)}
             />
-            <span><button onClick={getCardList}>Search</button></span>
+            <span><button onClick={getCardList}><i className="fa-solid fa-magnifying-glass"></i></button></span>
         </container>
     );
 }

@@ -4,7 +4,12 @@ export default function Card({ card }) {
     }
     return (
         <div className="card">
-            <img src={card.image_uris.png}/>
+            <div className="cardImage">
+                <img src={card.image_uris.png}/>
+                <div className="cardSelect hide">
+                    <button><i className="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
             <p>{card.name}</p>
         </div>
     )

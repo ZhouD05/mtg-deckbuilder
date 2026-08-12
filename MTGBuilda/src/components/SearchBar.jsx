@@ -8,16 +8,16 @@ export default function SearchBar( { sendCardList, cardQuery} ) {
     const [cardList, setCardList] = useState([]);
 
     async function getCardList() {
-        console.log(`${BASE_URL}/cards/search?q=${searchInput + cardQuery}`);
         let response = await fetch(`${BASE_URL}/cards/search?q=${searchInput + cardQuery}`);
         let data = await response.json();
         const fullCardList = data.data;
-        console.log(data)
+
         while (data.has_more && fullCardList.length < MAX_LIST_SIZE) {
             response = await fetch(data.next_page);
             data = await response.json();
             fullCardList.push(...data.data);
         }
+        
         sendCardList(fullCardList);
     }
 

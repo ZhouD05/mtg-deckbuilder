@@ -4,12 +4,17 @@ import { useState } from "react"
 
 export default function DeckBuilder( {cards} ) {
     const [decks, setDecks] = useState([]);
-    const [deckList, setDeckList] = useState([]);
+    const [currentDeck, setCurrentDeck] = useState(0);
 
     return (
         <div className="deckBuilder">
-            <CardDisplay cards={cards} deckList={deckList} setDeckList={setDeckList}/>
-            <DeckSelector deckList={deckList} setDeckList={setDeckList}/>
+            <CardDisplay cards={cards}/>
+            <DeckSelector 
+                currentDeck={currentDeck} 
+                setCurrentDeck={setCurrentDeck}
+                decks={decks}
+                setDecks={setDecks}
+            />
         </div>
     )
 }

@@ -12,7 +12,9 @@ export default function Banner( {sendCardList} ) {
                 <h1>MTGBuilda</h1>
             </div>
             <SearchBar sendCardList={sendCardList} cardQuery={cardQuery}/>
-            <button onClick={() => setModalOpen(true)}>Filter</button>
+            <button className="filterButton" onClick={() => setModalOpen(true)}>
+                <i className="fa-solid fa-filter"></i>
+            </button>
             <FilterModal isOpen={isOpen} closeModal={() => setModalOpen(false)} setCardQuery={setCardQuery}/>
         </container>
     )

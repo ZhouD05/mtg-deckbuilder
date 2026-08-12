@@ -43,31 +43,32 @@ export default function FilterModal( {isOpen, closeModal, setCardQuery} ) {
                         closeModal()
                     }
                 }}
-            >
+        >
             <div className="filterContent">
 
                 <div className="filterHeader">
                     <p>Filter</p>
                     <button onClick={closeModal}>&times;</button>
                 </div>
-                
-                <form className="manaColorFilter">
-                    {manaColors.map(color =>
-                        <>
-                            <input type="checkbox" 
-                            key={color}
-                            id={color}
-                            checked={colorQuery.includes(color)}
-                            onChange={() => changeColorCheckbox(color)}
-                             />
-                            <label for={color}>
+                <div className="filterSettings">
+                    <form className="manaColorFilter">
+                        {manaColors.map(color =>
+                            <div className="colorOption">
+                                <input type="checkbox" 
+                                key={color}
+                                id={color}
+                                checked={colorQuery.includes(color)}
+                                onChange={() => changeColorCheckbox(color)}
+                                />
+
+                                <label for={color}>
                                 {String(color).charAt(0).toUpperCase() + String(color).slice(1)}
-                            </label>
-                        </>
-                    )}
-                </form>
+                                </label>
 
-
+                            </div>
+                        )}
+                    </form>
+                </div>
             </div>
         </div>
     )

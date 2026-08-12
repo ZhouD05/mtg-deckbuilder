@@ -5,6 +5,8 @@
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   --primary-color: lavender;
   --secondary-color: rgb(246, 246, 253);
+  --queryButton-color: rgb(113, 215, 255);
+  --queryButtonHover-color: rgb(57, 199, 255);
 }
 
 /* Banner */
@@ -44,7 +46,7 @@
 }
 
 .searchBar button {
-  background-color: rgb(113, 215, 255);
+  background-color: var(--queryButton-color);
   margin-left: 5px;
   height: 30px;
   width: 30px;
@@ -55,7 +57,7 @@
 }
 
 .searchBar button:hover {
-  background-color: rgb(57, 199, 255);
+  background-color: var(--queryButtonHover-color);
 }
 
 /* Deck Builder */
@@ -141,6 +143,18 @@
   background-color: rgba(185, 185, 185, 0.8);
 }
 
+.filterButton {
+  padding: 5px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--queryButton-color); 
+}
+
+.filterButton:hover {
+  background-color: var(--queryButtonHover-color);
+}
+
 .filterModal {
   position: fixed;
   height: 100vh;
@@ -159,6 +173,7 @@
   height: 300px;
   width: 50vw;
   font-size: 1.5rem;
+  
 }
 
 .filterHeader {
@@ -173,4 +188,16 @@
   border: none;
   font-weight: 800;
   font-size: 1.5rem;
+}
+
+.filterSettings {
+  padding: 10px;
+  display: flex;
+}
+
+.filterSettings form{
+  font-size: 1.2rem;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }

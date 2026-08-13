@@ -8,7 +8,12 @@ export default function DeckBuilder( {cards} ) {
 
     return (
         <div className="deckBuilder">
-            <CardDisplay cards={cards}/>
+            <CardDisplay 
+                cards={cards}
+                currentDeck={currentDeck}
+                decks={decks}
+                setDecks={setDecks}                
+            />
             <DeckSelector 
                 currentDeck={currentDeck} 
                 setCurrentDeck={setCurrentDeck}

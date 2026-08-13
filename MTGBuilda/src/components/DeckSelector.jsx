@@ -2,6 +2,14 @@ import { useEffect, useRef } from "react"
 
 export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDecks} ) {
     const nameRef = useRef(null);
+
+    useEffect(() => {
+        if (decks.length > 0) {
+            const latestDeck = decks.at(-1);
+            setCurrentDeck(latestDeck.name);
+        }
+
+    }, [decks]);
     
     function handleSubmit(e) {
         e.preventDefault();
@@ -40,7 +48,7 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
                     <button id="addDeckButton" type="submit">Add</button>
                 </form>
 
-                <select onChange={handleSelect}>
+                <select onChange={handleSelect} value={currentDeck}>
                     {renderDeckOptions()}
                 </select>
             </div>

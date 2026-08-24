@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   --primary-color: lavender;
   --secondary-color: rgb(246, 246, 253);
   --queryButton-color: rgb(113, 215, 255);
@@ -69,14 +69,15 @@
 }
 
 .deckSelector {
+  padding: 20px 0;
   height: 100%;
   position: sticky;
-  top: 20vh;
+  top: 10vh;
 }
 
 .deckModule {
   padding: 20px;
-  height: 400px;
+  height: 80vh;
   background-color: rgb(246, 246, 253);
   border-radius: 10px;
   border: 5px solid lavender;
@@ -200,4 +201,56 @@
   width: 50%;
   display: flex;
   flex-direction: column;
+}
+
+.cardListContainer {
+  margin: 10px 0;
+  background-color: var(--primary-color);
+  height: 40%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.cardList {
+  height: 100%;
+  overflow-y: scroll;
+  list-style-type: none;
+}
+
+.cardList::-webkit-scrollbar {
+  background: transparent;
+  width: 6px;
+}
+
+.cardList::-webkit-scrollbar-thumb {
+  background: rgb(202, 202, 220);
+  border-radius: 5px;
+}
+.cardList p {
+  font-weight: 800;
+  font-size: .7rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.cardList span {
+  color: black;
+  font-weight: 400;
+  font-size: .8rem;
+}
+
+.cardList li {
+  padding: 5px;
+}
+.cardList li:hover {
+  cursor: pointer;
+  background-color:rgba(205, 205, 247, 0.955);
+}
+.cardList li:not(:last-child) {
+  border-bottom: 1px solid rgba(205, 205, 247, 0.955);
+}
+
+#deckSelect {
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(205, 205, 247);
 }

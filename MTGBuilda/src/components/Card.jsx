@@ -6,17 +6,21 @@ export default function Card({ card, currentDeck, decks, setDecks }) {
     function addCard() {
         setDecks( prevDeck => 
             prevDeck.map(deck => {
-                console.log(deck)
-                if (deck.name === currentDeck) {
-                    console.log("WENT HERE")
+                if (deck.name !== currentDeck) { return deck };
 
+                const desiredCard = deck.cards.find((c) => (c.id === card.id));
+
+                if (!desiredCard) {
+                    card.amount = 1;
                     return {...deck, cards: [...deck.cards, card]};
                 }
-                return deck;
+
+                return {...deck, cards: deck.cards.map(c => c.id === card.id ? 
+                    {...c, amount: c.amount + 1} : c
+                )}
+
             }
         ))
-        console.log(currentDeck)
-        console.log(decks)
     }
 
     return (

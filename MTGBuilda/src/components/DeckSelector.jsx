@@ -1,26 +1,20 @@
 import { useEffect, useRef } from "react"
+import DeckInformation from "./DeckInformation";
 
 export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDecks} ) {
     const nameRef = useRef(null);
 
-    useEffect(() => {
-        if (decks.length > 0) {
-            const latestDeck = decks.at(-1);
-            setCurrentDeck(latestDeck.name);
-        }
-
-    }, [decks]);
-    
     function handleSubmit(e) {
         e.preventDefault();
         const newName = nameRef.current.value;
 
         if (decks.find((deck) => deck.name === newName)) {
-            console.log("Already IN")
-            alert("This deck name already exists.")
+            alert("This deck name already exists.");
         } else {
             const newDeck = { name: newName, cards: [] };
-            setDecks([...decks, newDeck])
+            setDecks([...decks, newDeck]);
+            setCurrentDeck(newName);
+
         }
     }
 
@@ -38,7 +32,7 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
     return (
         <div className="deckSelector">
             <div className="deckModule">
-                <h1> CHOOSE DECK</h1>
+                <h1> Decks</h1>
                 <form id="addDeckForm" onSubmit={handleSubmit}>
                     <input 
                         type="text" 
@@ -48,9 +42,11 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
                     <button id="addDeckButton" type="submit">Add</button>
                 </form>
 
-                <select onChange={handleSelect} value={currentDeck}>
+                <select id="deckSelect" onChange={handleSelect} value={currentDeck}>
                     {renderDeckOptions()}
                 </select>
+
+                <DeckInformation currentDeck={currentDeck} decks={decks}/>
             </div>
         </div>     
     )

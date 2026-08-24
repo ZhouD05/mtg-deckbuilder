@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { 
     Chart as ChartJS, 
@@ -6,8 +5,7 @@ import {
     CategoryScale, 
     LinearScale, 
     Title,
-    Tooltip,
-    scales} from "chart.js";
+    Tooltip} from "chart.js";
 
 ChartJS.register(
     BarElement, 

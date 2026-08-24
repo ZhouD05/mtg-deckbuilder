@@ -1,6 +1,5 @@
 import { useState } from "react"
 import Banner from "./Banner"
-import CardDisplay from "./CardDisplay"
 import DeckBuilder from "./DeckBuilder";
 
 export default function Main() {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import DeckInformation from "./DeckInformation";
 
 export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDecks} ) {

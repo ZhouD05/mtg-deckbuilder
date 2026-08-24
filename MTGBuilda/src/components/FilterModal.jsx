@@ -5,26 +5,29 @@ export default function FilterModal( {isOpen, closeModal, setCardQuery} ) {
     const manaColors = ["white", "blue", "black", "red", "green", "colorless"];
 
     useEffect(() => {
+
+        function createQuery() {
+            let query = "";
+            if (colorQuery.length > 0) {
+                query = query + "+c="
+                for (const color in colorQuery) {
+                    console.log(colorQuery[color])
+                    let colorAbbreviation = colorQuery[color].charAt(0);
+                    if (colorQuery[color] === "blue") { colorAbbreviation = "u"};
+                    query = query + colorAbbreviation;
+                }
+                console.log(query)
+            }
+            setCardQuery(query);
+        }
+
         createQuery();
-        console.log(colorQuery);
-    }, [colorQuery]);
+
+    }, [colorQuery, setCardQuery]);
 
     if (!isOpen) { return null };
 
-    function createQuery() {
-        let query = "";
-        if (colorQuery.length > 0) {
-            query = query + "+c="
-            for (const color in colorQuery) {
-                console.log(colorQuery[color])
-                let colorAbbreviation = colorQuery[color].charAt(0);
-                if (colorQuery[color] === "blue") { colorAbbreviation = "u"};
-                query = query + colorAbbreviation;
-            }
-            console.log(query)
-        }
-        setCardQuery(query);
-    }
+
 
     function changeColorCheckbox(color) {
         if (colorQuery.includes(color)) {

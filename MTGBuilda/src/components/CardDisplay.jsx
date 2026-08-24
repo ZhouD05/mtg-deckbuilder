@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-export default function CardDisplay( { cards, currentDeck, decks, setDecks } ) {
+export default function CardDisplay( { cards, currentDeck, setDecks } ) {
     function renderCards() {
         if (!cards) { return <p>Invalid Search</p>}
 
@@ -9,7 +9,6 @@ export default function CardDisplay( { cards, currentDeck, decks, setDecks } ) {
                 key={card.id} 
                 card={card}
                 currentDeck={currentDeck}
-                decks={decks}
                 setDecks={setDecks}    
             />
         ))

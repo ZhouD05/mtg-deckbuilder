@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const BASE_URL = "https://api.scryfall.com";
 const MAX_LIST_SIZE = 525;
 
 export default function SearchBar( { sendCardList, cardQuery} ) {
     const [searchInput, setSearchInput] = useState("");
-    const [cardList, setCardList] = useState([]);
 
     async function getCardList() {
         let response = await fetch(`${BASE_URL}/cards/search?q=${searchInput + cardQuery}`);

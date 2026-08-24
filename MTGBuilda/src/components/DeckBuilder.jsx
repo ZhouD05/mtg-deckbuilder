@@ -11,7 +11,6 @@ export default function DeckBuilder( {cards} ) {
             <CardDisplay 
                 cards={cards}
                 currentDeck={currentDeck}
-                decks={decks}
                 setDecks={setDecks}                
             />
             <DeckSelector 

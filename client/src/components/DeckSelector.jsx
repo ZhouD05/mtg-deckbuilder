@@ -14,13 +14,23 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
             const newDeck = { name: newName, cards: [] };
             setDecks([...decks, newDeck]);
             setCurrentDeck(newName);
-
+            postNewDeck(newDeck);
         }
     }
 
     function handleSelect(e) {
         e.preventDefault();
         setCurrentDeck(e.target.value);
+    }
+
+    function postNewDeck(deck) {
+        fetch("http://localhost:8080/decks", {
+            method: "POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(deck)
+        }).then(() => {
+            console.log("new deck added");
+        })
     }
 
     function renderDeckOptions() {

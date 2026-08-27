@@ -81,9 +81,6 @@ export default function DeckInformation( { currentDeck, decks } ) {
             if (card.cmc > highestManaCost) highestManaCost = card.cmc;
             if (card.cmc < lowestManaCost) lowestManaCost = card.cmc;
         }
-        console.log(lowestManaCost)
-        console.log(highestManaCost)
-
 
         for (let cmc = lowestManaCost; cmc <= highestManaCost; cmc++) {
             cmcList.push(cmc);
@@ -103,7 +100,6 @@ export default function DeckInformation( { currentDeck, decks } ) {
                 manaCurve[index] += card.amount;
             }
         }
-        console.log(manaCurve)
         return manaCurve;
     }
 

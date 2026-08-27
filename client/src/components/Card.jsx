@@ -4,23 +4,46 @@ export default function Card({ card, currentDeck, setDecks }) {
     }
 
     function addCard() {
-        setDecks( prevDeck => 
-            prevDeck.map(deck => {
+        setDecks( prevDecks => 
+            prevDecks.map((deck) => {
                 if (deck.name !== currentDeck) { return deck };
 
                 const desiredCard = deck.cards.find((c) => (c.id === card.id));
+                let newDeck = {};
 
                 if (!desiredCard) {
                     card.amount = 1;
-                    return {...deck, cards: [...deck.cards, card]};
+                    newDeck = {...deck, cards: [...deck.cards, card]}
+                    postDeckWithNewCard(newDeck);
+
+                    return newDeck;
                 }
 
-                return {...deck, cards: deck.cards.map(c => c.id === card.id ? 
-                    {...c, amount: c.amount + 1} : c
-                )}
+                const deckWithNewCard = deck.cards.map((c) => { 
+                    if (c.id === card.id) {
+                        return {...c, amount: c.amount + 1};
+                    } else {
+                        return c;
+                    }
+                })
+
+                newDeck = {...deck, cards: deckWithNewCard}
+                postDeckWithNewCard(newDeck);
+                
+                return newDeck;
 
             }
         ))
+    }
+
+    function postDeckWithNewCard(deck) {
+        fetch(`http://localhost:8080/decks/${deck.name}`, {
+            method: "POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(deck)
+        }).then(() => {
+            console.log("Updated deck");
+        })
     }
 
     return (

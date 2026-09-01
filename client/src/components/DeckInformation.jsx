@@ -15,9 +15,15 @@ ChartJS.register(
     Tooltip
 )
 
-export default function DeckInformation( { currentDeck, decks } ) {
+export default function DeckInformation( { currentDeck, decks, setDecks } ) {
     if (decks.length < 1) { return };
     
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const deck = decks.find(deck => deck.id === currentDeck);
+    const cards = deck.cards || [];
+
+    let highestManaCost = 0;
+    let lowestManaCost = 20;
     const options = {
         scales: {
             x: {
@@ -33,18 +39,56 @@ export default function DeckInformation( { currentDeck, decks } ) {
             }
         }
     };
-    const deck = decks.find(deck => deck.name === currentDeck);
-    let highestManaCost = 0;
-    let lowestManaCost = 20;
+
+    async function deleteCard(cardId) {
+        const deck = decks.find(deck => deck.id === currentDeck);
+        if (!deck) return;
+
+        const desiredCard = deck.cards.find(card => card.id === cardId);
+        if (!desiredCard) return;
+
+        const newAmount = desiredCard.amount - 1;
+        let newDeck;
+
+        if (newAmount === 0) {
+            newDeck = {...deck, cards: deck.cards.filter(card => card.id !== cardId)};
+        } else {
+            newDeck = {...deck, cards: deck.cards.map(card => {
+                    if (card.id === cardId) {
+                        return {...card, amount: newAmount};
+                    } else {
+                        return card;
+                    }
+                })
+            }
+        }
+
+        setDecks(prevDecks => prevDecks.map(d => {
+            if (d.id === deck.id) {
+                return newDeck;
+            } else {
+                return d;
+            }
+        }));
+
+
+        const response = await fetch(`${apiUrl}/decks/${deck.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newDeck)
+        });
+    }
+
 
     function listOutDeck() {
 
         if (!deck) { return };
 
-        return deck.cards.map((card) => (
+        return cards.map((card) => (
             <li key={card.id}> 
                 <a>
                     <p>x{card.amount} <span>{card.name}</span></p>
+                    <button onClick={() => deleteCard(card.id)}>X</button>
                 </a>
             </li>
         ));
@@ -53,7 +97,7 @@ export default function DeckInformation( { currentDeck, decks } ) {
     function getCardCount() {
         let sum = 0;
 
-        for (const card of deck.cards) {
+        for (const card of cards) {
             sum += card.amount;
         }
 
@@ -74,7 +118,6 @@ export default function DeckInformation( { currentDeck, decks } ) {
     };
 
     function getLabels() {
-        const cards = deck.cards;
         const cmcList = [];
 
         for (const card of cards) {
@@ -89,7 +132,6 @@ export default function DeckInformation( { currentDeck, decks } ) {
     }
 
     function getManaCurve() {
-        const cards = deck.cards;
         const manaCurve = [];
 
         for (const card of cards) {

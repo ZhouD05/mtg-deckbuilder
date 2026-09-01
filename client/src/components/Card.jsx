@@ -1,49 +1,51 @@
-export default function Card({ card, currentDeck, setDecks }) {
+export default function Card({ card, currentDeck, decks, setDecks }) {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    
     if (Object.hasOwn(card, "card_faces") && !Object.hasOwn(card, "image_uris")) {
         card = card.card_faces[0];
     }
 
-    function addCard() {
-        setDecks( prevDecks => 
-            prevDecks.map((deck) => {
-                if (deck.name !== currentDeck) { return deck };
+    async function addCard() {
+        const deck = decks.find(deck => deck.id === currentDeck);
+        if (!deck) { return };
 
-                const desiredCard = deck.cards.find((c) => (c.id === card.id));
-                let newDeck = {};
+        const desiredCard = deck.cards.find(c => c.id === card.id);
 
-                if (!desiredCard) {
-                    card.amount = 1;
-                    newDeck = {...deck, cards: [...deck.cards, card]}
-                    postDeckWithNewCard(newDeck);
-
-                    return newDeck;
+        let newDeck;
+        if (!desiredCard) {
+            card.amount = 1;
+            newDeck = {...deck, cards: [...deck.cards, card]}
+        } else {
+            const deckWithNewCard = deck.cards.map((c) => { 
+                if (c.id === card.id) {
+                    return {...c, amount: c.amount + 1};
+                } else {
+                    return c;
                 }
+            })
 
-                const deckWithNewCard = deck.cards.map((c) => { 
-                    if (c.id === card.id) {
-                        return {...c, amount: c.amount + 1};
-                    } else {
-                        return c;
-                    }
-                })
+            newDeck = {...deck, cards: deckWithNewCard}
+        }
 
-                newDeck = {...deck, cards: deckWithNewCard}
-                postDeckWithNewCard(newDeck);
-                
-                return newDeck;
+        const savedDeck = await postDeckWithNewCard(newDeck);
 
+        setDecks(prevDecks => prevDecks.map(d => {
+            if (d.id === currentDeck) {
+                return savedDeck.rows[0];
+            } else {
+                return d;
             }
-        ))
+        }))
     }
 
-    function postDeckWithNewCard(deck) {
-        fetch(`http://localhost:8080/decks/${deck.name}`, {
-            method: "POST",
-            headers:{"Content-Type": "application/json"},
+    async function postDeckWithNewCard(deck) {
+        const response = await fetch(`${apiUrl}/decks/${deck.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(deck)
-        }).then(() => {
-            console.log("Updated deck");
-        })
+        });
+        const data = await response.json();
+        return data;
     }
 
     return (

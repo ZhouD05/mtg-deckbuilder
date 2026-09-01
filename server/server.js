@@ -1,6 +1,10 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
+const pool = require("./database/db");
 
+const port = process.env.PORT;
 const app = express();
 const corsOptions = {
     origin: ("http://localhost:5173"),
@@ -16,7 +20,7 @@ const deckRouter = require("./routes/decks");
 
 app.use("/decks", deckRouter)
 
-app.listen(8080, () => {
-    console.log("Server has started on port 8080")
+app.listen(port, () => {
+    console.log(`Server has started on port ${port}`)
 });
 

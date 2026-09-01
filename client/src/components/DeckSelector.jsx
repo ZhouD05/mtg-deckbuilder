@@ -1,8 +1,10 @@
 import { useRef } from "react"
 import DeckInformation from "./DeckInformation";
 
+
 export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDecks} ) {
     const nameRef = useRef(null);
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -12,30 +14,66 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
             alert("This deck name already exists.");
         } else {
             const newDeck = { name: newName, cards: [] };
-            setDecks([...decks, newDeck]);
-            setCurrentDeck(newName);
             postNewDeck(newDeck);
+            
+        }
+    }
+
+    function handleDelete(e) {
+        e.preventDefault();
+        const deck = decks.find((deck) => deck.id === currentDeck);
+        if (!deck) { return };
+        console.log("PASSED DECK FIND")
+        console.log(deck)
+        if (confirm(`Are your sure you want to delete ${deck.name}`)) {
+            deleteCurrentDeck();
         }
     }
 
     function handleSelect(e) {
         e.preventDefault();
-        setCurrentDeck(e.target.value);
+        setCurrentDeck(Number(e.target.value));
+    }
+
+    async function deleteCurrentDeck() {
+
+        await fetch(`${apiUrl}/decks/${currentDeck}`, {
+            method: "DELETE",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify()
+        })
+
+        let newCurrentDeck = 0;
+
+        for (const deck of decks) {
+            if (deck.id === currentDeck) { continue };  
+            newCurrentDeck = deck.id;
+            break;
+        }
+
+        setDecks(prevDecks => prevDecks.filter( deck => deck.id !== currentDeck));
+        setCurrentDeck(newCurrentDeck);
     }
 
     function postNewDeck(deck) {
-        fetch("http://localhost:8080/decks", {
+        fetch(`${apiUrl}/decks`, {
             method: "POST",
             headers:{"Content-Type": "application/json"},
             body: JSON.stringify(deck)
-        }).then(() => {
-            console.log("new deck added");
-        })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            setDecks([...decks, data.rows[0]]);
+            setCurrentDeck(data.rows[0].id);
+
+            console.log(decks[currentDeck])
+
+        });
     }
 
     function renderDeckOptions() {
         return decks.map((deck) => (
-            <option key={deck.name} value={deck.name}>{deck.name}</option>
+            <option key={deck.id} value={deck.id}>{deck.name}</option>
         ))
     }
 
@@ -51,12 +89,14 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
                     />
                     <button id="addDeckButton" type="submit">Add</button>
                 </form>
-
+                
+                <button id="deleteDeckButton" onClick={handleDelete}>Delete</button>
+                
                 <select id="deckSelect" onChange={handleSelect} value={currentDeck}>
                     {renderDeckOptions()}
                 </select>
 
-                <DeckInformation currentDeck={currentDeck} decks={decks}/>
+                <DeckInformation currentDeck={currentDeck} decks={decks} setDecks={setDecks}/>
             </div>
         </div>     
     )

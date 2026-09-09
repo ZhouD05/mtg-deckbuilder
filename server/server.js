@@ -1,24 +1,32 @@
 require("dotenv").config();
 
+const path = require("node:path");
 const express = require("express");
 const cors = require("cors");
-const pool = require("./database/db");
+const passport = require("passport");
+const deckRouter = require("./routes/decks");
+const userRouter = require("./routes/users");
+
+
+const app = express();
 
 const port = process.env.PORT;
-const app = express();
 const corsOptions = {
     origin: ("http://localhost:5173"),
 };
-
 app.use(cors(corsOptions));
+
+// Passport
+require("./config/passport")(passport);
+app.use(passport.initialize());
+
+// Data Parsing
 app.use(express.json());
-app.get("/api", (req, res) => {
-    res.json({ fruits: ["apple", "orange"]})
-});
+app.use(express.urlencoded({extended: true}));
 
-const deckRouter = require("./routes/decks");
-
-app.use("/decks", deckRouter)
+// Routes
+app.use("/decks", deckRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
     console.log(`Server has started on port ${port}`)

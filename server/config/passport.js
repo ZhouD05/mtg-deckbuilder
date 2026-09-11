@@ -25,7 +25,10 @@ const strategy = new JwtStrategy(options, (payload, done) => {
         }
         
     })
-    .catch(error => done(error, null))
+    .catch(error => {
+        console.log(error)
+        done(error, null)
+    })
 });
 
 module.exports = (passport) => {

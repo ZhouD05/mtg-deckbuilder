@@ -1,10 +1,12 @@
 import { useRef } from "react"
 import DeckInformation from "./DeckInformation";
+import { useAuth } from "../contexts/AuthContext";
 
 
 export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDecks} ) {
     const nameRef = useRef(null);
     const apiUrl = import.meta.env.VITE_API_URL;
+    const {user} = useAuth();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -13,7 +15,7 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
         if (decks.find((deck) => deck.name === newName)) {
             alert("This deck name already exists.");
         } else {
-            const newDeck = { name: newName, cards: [] };
+            const newDeck = { name: newName, cards: [], userId: user.id };
             postNewDeck(newDeck);
             
         }

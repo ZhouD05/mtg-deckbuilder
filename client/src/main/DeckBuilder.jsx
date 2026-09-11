@@ -1,3 +1,4 @@
+import { useAuth } from "../contexts/AuthContext";
 import CardDisplay from "./CardDisplay";
 import DeckSelector from "./DeckSelector";
 import { useState, useEffect } from "react"
@@ -5,16 +6,18 @@ import { useState, useEffect } from "react"
 export default function DeckBuilder( {cards} ) {
     const [decks, setDecks] = useState([]);
     const [currentDeck, setCurrentDeck] = useState(0);
+    const {user} = useAuth();
     const apiUrl = import.meta.env.VITE_API_URL;
 
     async function loadDecks() {
         try {
-            const res = await fetch(`${apiUrl}/decks`);
+            console.log(user);
+
+            const res = await fetch(`${apiUrl}/decks?user=${user.id}`);
             const data = await res.json();
 
             setDecks(data)
             setCurrentDeck(data[0].id)
-            console.log(data[0].id);
         } catch (error) {
             console.error("GetDecks Error: ", error);
         }
@@ -22,7 +25,7 @@ export default function DeckBuilder( {cards} ) {
 
     useEffect(() => {
         loadDecks();
-    }, [])
+    }, [user])
     return (
         <div className="deckBuilder">
             <CardDisplay 

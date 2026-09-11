@@ -10,8 +10,8 @@ const jsonwebtoken = require("jsonwebtoken");
 const keyPath = path.join(__dirname, "..", "keys", "private_key.pem");
 const PRIVATE_KEY = fs.readFileSync(keyPath, "utf-8");
 
-router.get("/protected", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
-    res.status(200).json({success: true, msg: "you are authorized!!!"});
+router.get("/me", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+    res.status(200).json({success: true, user: req.user});
 });
 
 router.post("/log-in", async (req, res, next) => {
@@ -29,6 +29,7 @@ router.post("/log-in", async (req, res, next) => {
             res.status(401).json({ success: false, msg: "Password was incorrect"});
         } else {
             const jwt = createJWT(user);
+            console.log("SUCCESSFUL LOGIN")
             res.status(200).json({ 
                 success: true, 
                 user: user, 
@@ -51,7 +52,7 @@ router.post("/sign-up", async (req, res, next) => {
             [ req.body.username, hashedPassword ]
         );
 
-        const jwt = createJWT(user);
+        const jwt = createJWT(user.rows[0]);
         console.log(user.rows[0]);
         res.json({ 
             success: true, 
@@ -69,10 +70,8 @@ router.post("/sign-up", async (req, res, next) => {
 function createJWT(user) {
     const id = user.id;
     const expiresIn = "1d";
-
     const payload = {
         sub: id,
-        iat: Date.now()
     }
 
     const signedToken = jsonwebtoken.sign(

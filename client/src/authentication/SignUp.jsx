@@ -34,13 +34,15 @@ export default function SignUp() {
     }
 
     return (
-        <div>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"/>
-                <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
-                <button type="Submit">Sign Up</button>
-            </form>
+        <div className="auth">
+            <div className="authForm">
+                <h1>Sign Up</h1>
+                <form onSubmit={handleSubmit}>
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"/>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
+                    <button type="Submit">Sign Up</button>
+                </form>
+            </div>
         </div>
     )
 }

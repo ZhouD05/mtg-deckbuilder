@@ -82,21 +82,22 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
     return (
         <div className="deckSelector">
             <div className="deckModule">
-                <h1> Decks</h1>
+                <h1>Decks</h1>
                 <form id="addDeckForm" onSubmit={handleSubmit}>
                     <input 
                         type="text" 
                         placeholder="Name your deck..." 
                         ref={nameRef}
                     />
-                    <button id="addDeckButton" type="submit">Add</button>
+                    <button type="submit"><i className="fa-solid fa-plus"></i></button>
                 </form>
                 
-                <button id="deleteDeckButton" onClick={handleDelete}>Delete</button>
-                
-                <select id="deckSelect" onChange={handleSelect} value={currentDeck}>
-                    {renderDeckOptions()}
-                </select>
+                <div id="deckSelect">
+                    <select id="deckDropDown" onChange={handleSelect} value={currentDeck}>
+                        {renderDeckOptions()}
+                    </select>
+                    <button onClick={handleDelete}><i className="fa-solid fa-trash"></i></button>
+                </div>
 
                 <DeckInformation currentDeck={currentDeck} decks={decks} setDecks={setDecks}/>
             </div>

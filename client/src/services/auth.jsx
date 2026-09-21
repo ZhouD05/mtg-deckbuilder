@@ -2,6 +2,7 @@ import moment from "moment";
 
 export function setLocalStorage(responseObject) {
     const expires = moment().add(responseObject.expiresIn);
+    console.log(expires)
     localStorage.setItem("token", responseObject.token);
     localStorage.setItem("expires", JSON.stringify(expires.valueOf()));
 }

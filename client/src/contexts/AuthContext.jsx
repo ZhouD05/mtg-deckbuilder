@@ -15,9 +15,7 @@ export function AuthProvider({ children }) {
         fetch(`${apiUrl}/users/me`, {
             headers: {Authorization: token}
         }).then((response) => {
-
             return response.json();
-
         }).then((data) => {
             setUser(data.user);
         })
@@ -27,7 +25,7 @@ export function AuthProvider({ children }) {
         user,
         setUser,
         token,
-        setToken,
+        setToken
     }
 
     return(

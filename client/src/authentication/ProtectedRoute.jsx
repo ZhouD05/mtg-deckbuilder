@@ -1,11 +1,14 @@
 import { Navigate } from "react-router-dom"
-import { isLoggedIn } from "../services/auth";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect } from "react";
+import { isLoggedIn } from "../services/auth";
 
 function ProtectedRoute({ children }) {
-    const { token } = useAuth();
-    if (!token) {
+    const { user, token } = useAuth();
+
+
+    if (!token || !isLoggedIn()) {
+        console.log(isLoggedIn())
+        console.log(user)
         console.log("DENIED ACCESS")
         return <Navigate to={"/login"}/>;
     }

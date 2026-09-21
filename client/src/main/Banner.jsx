@@ -7,7 +7,13 @@ import { useAuth } from "../contexts/AuthContext";
 export default function Banner( {sendCardList} ) {
     const [isOpen, setModalOpen] = useState(false);
     const [cardQuery, setCardQuery] = useState("");
-    const { setUser, setToken, token, user } = useAuth();
+    const { setUser, setToken, user } = useAuth();
+
+    function renderUserInformation() {
+        if (user){
+            return <p>{user.username}</p>;
+        }
+    }
 
     function handleLogOut() {
         logOut();
@@ -16,16 +22,28 @@ export default function Banner( {sendCardList} ) {
     }
 
     return (
-        <container className="banner">
-            <div>
-                <h1>MTGBuilda</h1>
+        <container>
+            <div className="header">
+                <div className="logoHeader">
+                    BUILDA
+                </div>
+
+                <div className="userHeader">
+                    {renderUserInformation()}
+                    <button onClick={() => handleLogOut()}><p>Log Out</p></button>
+                </div>
+
             </div>
-            <SearchBar sendCardList={sendCardList} cardQuery={cardQuery}/>
-            <button className="filterButton" onClick={() => setModalOpen(true)}>
-                <i className="fa-solid fa-filter"></i>
-            </button>
-            <button onClick={() => handleLogOut()}>Log Out</button>
-            <FilterModal isOpen={isOpen} closeModal={() => setModalOpen(false)} setCardQuery={setCardQuery}/>
+            <div className="banner">
+                <h1>MTGBuilda</h1>
+
+                <SearchBar sendCardList={sendCardList} cardQuery={cardQuery}/>
+                <button className="filterButton" onClick={() => setModalOpen(true)}>
+                    <i className="fa-solid fa-filter"></i>
+                </button>
+
+                <FilterModal isOpen={isOpen} closeModal={() => setModalOpen(false)} setCardQuery={setCardQuery}/>
+            </div>
         </container>
     )
 }

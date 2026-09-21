@@ -88,7 +88,7 @@ export default function DeckInformation( { currentDeck, decks, setDecks } ) {
             <li key={card.id}> 
                 <a>
                     <p>x{card.amount} <span>{card.name}</span></p>
-                    <button onClick={() => deleteCard(card.id)}>X</button>
+                    <button onClick={() => deleteCard(card.id)}><i className="fa-solid fa-x"></i></button>
                 </a>
             </li>
         ));

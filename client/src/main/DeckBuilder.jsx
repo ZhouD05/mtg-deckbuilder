@@ -9,21 +9,23 @@ export default function DeckBuilder( {cards} ) {
     const {user} = useAuth();
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    async function loadDecks() {
-        try {
-            console.log(user);
-
-            const res = await fetch(`${apiUrl}/decks?user=${user.id}`);
-            const data = await res.json();
-
-            setDecks(data)
-            setCurrentDeck(data[0].id)
-        } catch (error) {
-            console.error("GetDecks Error: ", error);
-        }
-    }
-
     useEffect(() => {
+
+        async function loadDecks() {
+            try {
+                if(user) {
+
+                    const res = await fetch(`${apiUrl}/decks?user=${user.id}`);
+                    const data = await res.json();
+
+                    setDecks(data)
+                    setCurrentDeck(data[0].id)
+                }
+
+            } catch (error) {
+                console.error("GetDecks Error: ", error);
+            }
+        }
         loadDecks();
     }, [user])
     return (

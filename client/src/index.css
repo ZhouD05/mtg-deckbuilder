@@ -8,6 +8,83 @@
   --queryButton-color: rgb(113, 215, 255);
   --queryButtonHover-color: rgb(57, 199, 255);
 }
+/* Authentication */
+
+.auth {
+  background: linear-gradient(90deg, transparent, var(--primary-color) 80%), url("assets/auth-background.jpg");
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  justify-content: right;
+  width: 100%;
+}
+
+.authForm {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30vh;
+}
+
+.authForm input {
+  margin-top: .5rem;
+
+  height: 30px;
+  padding-left: 20px;
+  border-radius: 10px;
+  border: none;
+  width: 90%;
+}
+
+.authForm button {
+  background-color: var(--queryButton-color);
+  margin-top: .5rem;
+  margin-bottom: 1.2rem;
+  height: 30px;
+  width: 60px;
+  border-radius: 10px;
+  border: none;
+}
+
+.authForm button:hover {
+  background-color: var(--queryButtonHover-color);
+}
+
+/* Header */
+
+.header {
+  color: white;
+  background-color: rgb(189, 144, 255);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.5rem;
+  min-width: 600px;
+  box-shadow: black 0px 0px 20px;
+  isolation: isolate;
+}
+
+.userHeader {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 8rem;
+}
+
+.header button {
+  color: white;
+  background: none;
+  border: none;
+  height: 100%;
+  padding: 10px;
+}
+
+.header button:hover {
+  background: darkorchid;
+
+}
 
 /* Banner */
 
@@ -78,11 +155,51 @@
 .deckModule {
   padding: 20px;
   height: 80vh;
+  width: 15rem;
   background-color: rgb(246, 246, 253);
   border-radius: 10px;
   border: 5px solid lavender;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.322);
 }
+
+#addDeckForm {
+  display: flex;
+  padding-top: .5rem;
+}
+
+#addDeckForm input {
+  width: 100%;
+  padding: .2rem;
+  margin-right: .2rem;
+  border-radius: .3rem;
+  border: 1px solid black;
+}
+
+.deckModule button {
+  background-color: var(--queryButton-color);
+  padding: .2rem;
+  border-radius: .3rem;
+  border: none;
+}
+
+.deckModule button:hover {
+  background-color: var(--queryButtonHover-color);
+}
+
+#deckSelect {
+  padding-top: .8rem;
+  
+  display: flex;
+}
+
+#deckDropDown {
+  margin-right: .2rem;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(205, 205, 247);
+}
+
 
 /* Card Display */
 
@@ -217,6 +334,26 @@
   list-style-type: none;
 }
 
+.cardList li a{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardList li a p{
+padding-right: .1rem;
+}
+
+.cardList button {
+  background: lightgray;
+  font-size: .5rem;
+  border-radius: 5px;
+  height: 1rem;
+}
+.cardList button:hover {
+  background-color: darkgrey;
+}
+
 .cardList::-webkit-scrollbar {
   background: transparent;
   width: 6px;
@@ -248,9 +385,3 @@
   border-bottom: 1px solid rgba(205, 205, 247, 0.955);
 }
 
-#deckSelect {
-  width: 100%;
-  border-radius: 5px;
-  border: none;
-  background-color: rgb(205, 205, 247);
-}

@@ -53,7 +53,6 @@ router.post("/sign-up", async (req, res, next) => {
         );
 
         const jwt = createJWT(user.rows[0]);
-        console.log(user.rows[0]);
         res.json({ 
             success: true, 
             user: user.rows[0], 
@@ -70,6 +69,8 @@ router.post("/sign-up", async (req, res, next) => {
 function createJWT(user) {
     const id = user.id;
     const expiresIn = "1d";
+    const expiresInReturn = { days: 1 };
+
     const payload = {
         sub: id,
     }
@@ -82,7 +83,7 @@ function createJWT(user) {
 
     return {
         token: "Bearer " + signedToken,
-        expires: expiresIn
+        expires: expiresInReturn
     }
 }
 

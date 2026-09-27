@@ -10,6 +10,8 @@ const jsonwebtoken = require("jsonwebtoken");
 const keyPath = path.join(__dirname, "..", "keys", "private_key.pem");
 const PRIVATE_KEY = fs.readFileSync(keyPath, "utf-8");
 
+const UNIQUEVIOLATIONCODE = "23505";
+
 router.get("/me", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     res.status(200).json({success: true, user: req.user});
 });
@@ -20,7 +22,8 @@ router.post("/log-in", async (req, res, next) => {
         const user = userQuery.rows[0];
 
         if (!user) {
-            res.status(401).json({ success: false, msg: "Username was incorrect"})
+            res.status(401).json({ success: false, msg: "Username was incorrect"});
+            return;
         }
 
         const match = await bcrypt.compare(req.body.password, user.password);
@@ -53,7 +56,7 @@ router.post("/sign-up", async (req, res, next) => {
         );
 
         const jwt = createJWT(user.rows[0]);
-        res.json({ 
+        res.status(201).json({ 
             success: true, 
             user: user.rows[0], 
             token: jwt.token, 
@@ -61,7 +64,11 @@ router.post("/sign-up", async (req, res, next) => {
         });
         
     } catch (error) {
-        return next(error);
+        if (error.code === UNIQUEVIOLATIONCODE) {
+            return res.status(409).json({success: false, msg: "Username is already taken"})
+        }
+
+        next(error);
     }
 });
 

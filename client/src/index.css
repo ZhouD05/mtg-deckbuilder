@@ -50,6 +50,12 @@
   background-color: var(--queryButtonHover-color);
 }
 
+#attempt {
+  font-size: .9rem;
+  color: red;
+  margin-top: 1rem;
+}
+
 /* Header */
 
 .header {

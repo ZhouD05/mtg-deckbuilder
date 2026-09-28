@@ -1,5 +1,3 @@
-CREATE DATABASE deckbuilder;
-
 CREATE TABLE account(
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
@@ -11,12 +9,4 @@ CREATE TABLE deck(
     account_id INT REFERENCES account(id) NOT NULL,
     name VARCHAR(255),
     cards JSONB[]
-);
-
-CREATE TABLE card(
-    id VARCHAR(255) NOT NULL,
-    deck_id INT REFERENCES deck(id) NOT NULL,
-    card JSONB,
-    amount INT,
-    PRIMARY KEY (id, deck_id)
 );

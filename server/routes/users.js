@@ -8,7 +8,9 @@ const bcrypt = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 
 const keyPath = path.join(__dirname, "..", "keys", "private_key.pem");
-const PRIVATE_KEY = fs.readFileSync(keyPath, "utf-8");
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+    ? process.env.PRIVATE_KEY.replace(/\\n/g, "\n")
+    : fs.readFileSync(keyPath, "utf-8");
 
 const UNIQUEVIOLATIONCODE = "23505";
 

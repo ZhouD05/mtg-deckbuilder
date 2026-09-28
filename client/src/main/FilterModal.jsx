@@ -11,12 +11,10 @@ export default function FilterModal( {isOpen, closeModal, setCardQuery} ) {
             if (colorQuery.length > 0) {
                 query = query + "+c="
                 for (const color in colorQuery) {
-                    console.log(colorQuery[color])
                     let colorAbbreviation = colorQuery[color].charAt(0);
                     if (colorQuery[color] === "blue") { colorAbbreviation = "u"};
                     query = query + colorAbbreviation;
                 }
-                console.log(query)
             }
             setCardQuery(query);
         }

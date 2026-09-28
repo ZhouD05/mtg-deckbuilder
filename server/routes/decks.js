@@ -7,7 +7,6 @@ const decks = [];
 // Get list of all decks
 router.get("/", async (req, res) => {
     try {
-        console.log(req.query.user)
         const decks = await pool.query(
             `SELECT * FROM deck WHERE account_id = ${req.query.user}`
         )
@@ -23,15 +22,12 @@ router.post("/", async (req, res) => {
 
     try {
         const deckName = req.body.name;
-        console.log(deckName)
-        console.log("was Here");
 
         const newDeck = await pool.query(
             "INSERT INTO deck (account_id, cards, name) VALUES ($1, '{}', $2) RETURNING *",
             [req.body.userId, deckName]
         )
         decks.push(newDeck);
-        console.log(newDeck);
         res.status(201).json(newDeck);
     } catch (error) {
         console.error("Error:",error.message);
@@ -54,7 +50,6 @@ router.put("/:id", async (req, res) => {
     try {
         const deckId = req.params.id;
         const updatedCards = req.body.cards;
-        console.log(typeof updatedCards)
         const updatedDeck = await pool.query(
             "UPDATE deck SET cards = $2 WHERE id = $1 RETURNING *",
             [deckId, updatedCards]

@@ -2,7 +2,6 @@ import moment from "moment";
 
 export function setLocalStorage(responseObject) {
     const expires = moment().add(responseObject.expiresIn);
-    console.log(expires)
     localStorage.setItem("token", responseObject.token);
     localStorage.setItem("expires", JSON.stringify(expires.valueOf()));
 }
@@ -10,7 +9,6 @@ export function setLocalStorage(responseObject) {
 export function logOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("expires");
-    console.log("LOGGED OUT")
 }
 
 export function isLoggedIn() {

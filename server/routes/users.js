@@ -32,7 +32,6 @@ router.post("/log-in", async (req, res, next) => {
             res.status(401).json({ success: false, msg: "Password was incorrect"});
         } else {
             const jwt = createJWT(user);
-            console.log("SUCCESSFUL LOGIN")
             res.status(200).json({ 
                 success: true, 
                 user: user, 

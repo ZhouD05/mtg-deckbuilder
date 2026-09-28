@@ -25,8 +25,6 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
         e.preventDefault();
         const deck = decks.find((deck) => deck.id === currentDeck);
         if (!deck) { return };
-        console.log("PASSED DECK FIND")
-        console.log(deck)
         if (confirm(`Are your sure you want to delete ${deck.name}`)) {
             deleteCurrentDeck();
         }
@@ -67,9 +65,6 @@ export default function DeckSelector( {currentDeck, setCurrentDeck, decks, setDe
         }).then((data) => {
             setDecks([...decks, data.rows[0]]);
             setCurrentDeck(data.rows[0].id);
-
-            console.log(decks[currentDeck])
-
         });
     }
 

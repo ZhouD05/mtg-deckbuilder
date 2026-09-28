@@ -26,7 +26,6 @@ const strategy = new JwtStrategy(options, (payload, done) => {
         
     })
     .catch(error => {
-        console.log(error)
         done(error, null)
     })
 });

@@ -4,11 +4,11 @@ const Pool = require("pg").Pool;
 
 let pool;
 
-if (process.env.DATABSE_URL) {
+if (process.env.DATABASE_URL) {
     pool = new Pool({
-        connectionString: process.env.DATABSE_URL, 
+        connectionString: process.env.DATABASE_URL, 
         // Secure Sockets Layer, encrpts the data sent between backend and database
-        ssl: process.env.NODE_ENV === "production" ? {rejectUnauthorized: false } : false
+        ssl: {rejectUnauthorized: false }
     })
 } else {
     pool = new Pool({

@@ -1,23 +1,24 @@
 import { useState } from "react"
+import { useQueryAuth } from "../contexts/QueryContext";
 
 const BASE_URL = "https://api.scryfall.com";
-const MAX_LIST_SIZE = 525;
 
-export default function SearchBar( { sendCardList, cardQuery} ) {
+export default function SearchBar( { cardQuery} ) {
+    const {setCardList, setNextPage, setLoading} = useQueryAuth();
     const [searchInput, setSearchInput] = useState("");
 
     async function getCardList() {
+        setLoading(true);
         let response = await fetch(`${BASE_URL}/cards/search?q=${searchInput + cardQuery}`);
         let data = await response.json();
-        const fullCardList = data.data;
+        const queriedCards = data.data;
 
-        while (data.has_more && fullCardList.length < MAX_LIST_SIZE) {
-            response = await fetch(data.next_page);
-            data = await response.json();
-            fullCardList.push(...data.data);
+        if (data.has_more) {
+            setNextPage(data.next_page);
         }
         
-        sendCardList(fullCardList);
+        setCardList(queriedCards);
+        setLoading(false);
     }
 
     return (

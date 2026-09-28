@@ -1,13 +1,13 @@
 import { useState } from "react"
 import Banner from "./Banner"
 import DeckBuilder from "./DeckBuilder";
+import { QueryProvider } from "../contexts/QueryContext";
 
 export default function Main() {
-    const [cardList, getCardList] = useState([]);
     return (
-        <>
-            <Banner sendCardList={getCardList}/>
-            <DeckBuilder cards={cardList}/>
-        </>
+        <QueryProvider>
+            <Banner/>
+            <DeckBuilder/>
+        </QueryProvider>
     )
 }

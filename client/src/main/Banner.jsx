@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import { logOut } from "../services/auth";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function Banner( {sendCardList} ) {
+export default function Banner() {
     const [isOpen, setModalOpen] = useState(false);
     const [cardQuery, setCardQuery] = useState("");
     const { setUser, setToken, user } = useAuth();
@@ -37,7 +37,7 @@ export default function Banner( {sendCardList} ) {
             <div className="banner">
                 <h1>MTGBuilda</h1>
 
-                <SearchBar sendCardList={sendCardList} cardQuery={cardQuery}/>
+                <SearchBar cardQuery={cardQuery}/>
                 <button className="filterButton" onClick={() => setModalOpen(true)}>
                     <i className="fa-solid fa-filter"></i>
                 </button>

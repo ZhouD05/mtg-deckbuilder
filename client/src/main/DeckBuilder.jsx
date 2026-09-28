@@ -3,7 +3,7 @@ import CardDisplay from "./CardDisplay";
 import DeckSelector from "./DeckSelector";
 import { useState, useEffect } from "react"
 
-export default function DeckBuilder( {cards} ) {
+export default function DeckBuilder() {
     const [decks, setDecks] = useState([]);
     const [currentDeck, setCurrentDeck] = useState(0);
     const {user} = useAuth();
@@ -31,7 +31,6 @@ export default function DeckBuilder( {cards} ) {
     return (
         <div className="deckBuilder">
             <CardDisplay 
-                cards={cards}
                 currentDeck={currentDeck}
                 decks={decks}
                 setDecks={setDecks}                

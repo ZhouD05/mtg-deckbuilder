@@ -2,19 +2,22 @@ import { useState, useContext, createContext } from "react";
 
 const QueryContext = createContext(undefined);
 
-export function useAuth() {
+export function useQueryAuth() {
     return useContext(QueryContext);
 }
 
-export function AuthProvider({ children }) {
-    const [cardList, getCardList] = useState([]);
-    const [nextPage, setNextPage] = useState(null)
+export function QueryProvider({ children }) {
+    const [cardList, setCardList] = useState([]);
+    const [nextPage, setNextPage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const value = {
         cardList,
-        getCardList,
+        setCardList,
         nextPage,
-        setNextPage
+        setNextPage,
+        loading,
+        setLoading
     }
 
     return(
